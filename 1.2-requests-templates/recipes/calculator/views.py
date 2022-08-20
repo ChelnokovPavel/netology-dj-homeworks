@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, reverse
 
 DATA = {
     'omlet': {
@@ -16,7 +17,12 @@ DATA = {
         'сыр, ломтик': 1,
         'помидор, ломтик': 1,
     },
-    # можете добавить свои рецепты ;)
+    'invisibility_potion': {
+        'Призрачная поганка': 1,
+        'Солнечник': 1,
+        'Хрустальная колба': 1,
+    }
+    # можете добавить свои рецепты ;) - ОК
 }
 
 # Напишите ваш обработчик. Используйте DATA как источник данных
@@ -28,3 +34,21 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+
+
+def home_view(request):
+    pages = {}
+    for key, value in DATA.items():
+        pages[key.replace('_', ' ')] = reverse('recipes', args=[key])
+    return render(request, 'home.html', {'pages': pages})
+
+
+def recipes(request, recipe):
+    servings = request.GET.get('servings')
+    recipe = DATA.get(recipe)
+    if servings:
+        try:
+            recipe = {k: v*int(servings) for k, v in recipe.items()}
+        except ValueError:
+            pass
+    return render(request, 'index.html', {'recipe': recipe})
