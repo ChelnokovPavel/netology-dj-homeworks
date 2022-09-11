@@ -20,6 +20,6 @@ def bus_stations(request):
     page = paginator.page(page_number)
     context = {
         'page': page,
-        'bus_stations': bus_stations
+        'bus_stations': bus_stations[page.start_index():page.end_index()+1]
     }
     return render(request, 'stations/index.html', context)

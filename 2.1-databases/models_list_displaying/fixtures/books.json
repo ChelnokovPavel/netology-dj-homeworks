@@ -12,6 +12,15 @@
     "model": "books.book",
     "pk": 2,
     "fields": {
+      "name": "test book",
+      "author": "idk",
+      "pub_date": "2017-03-15"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
       "name": "1984",
       "author": "Джордж Оруэл",
       "pub_date": "2016-12-06"
